@@ -35,7 +35,7 @@ const createCheckoutSession = async (req, res) => {
             metadata: { eventId, userId, quantity },
             
             // 🚨 FIX 1: Updated to port 5001 AND explicitly attached the event details!
-            success_url: `https://nexus-events-backend.onrender.com/my-bookings.html?success=true&event_id=${eventId}&quantity=${quantity}`,
+            success_url: `https://candid-biscuit-01a852.netlify.app/my-bookings.html?success=true&event_id=${eventId}&quantity=${quantity}`,
             cancel_url: `https://nexus-events-backend.onrender.com/event-details.html?id=${eventId}`,
         };
 
