@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details | Nexus Events</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="dark-theme">
+
+    <nav class="navbar glass-nav">
+        <div class="nav-brand" style="cursor: pointer;" onclick="window.location.href='index.html'">
+            <h2><span class="neon-text">N</span>Events</h2>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="events.html" class="active">Events</a>
+        </div>
+        <div class="nav-auth" id="nav-auth-container">
+            </div>
+    </nav>
+
+    <main class="container" style="padding-top: 100px; padding-bottom: 50px;">
+        <div id="loading-spinner" style="text-align: center; padding: 50px;">
+            <h2 class="neon-text">Loading Event Details...</h2>
+        </div>
+
+        <div id="event-content" class="hidden" data-aos="fade-up">
+            
+            <div class="event-hero" style="width: 100%; height: 400px; border-radius: 20px; overflow: hidden; position: relative; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,255,255,0.1);">
+                <img id="detail-image" src="" alt="Event Cover" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="glass-pill" style="position: absolute; top: 20px; left: 20px; font-size: 1.2rem; font-weight: bold;">
+                    <span id="detail-category">Category</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; align-items: start;">
+                
+                <div class="event-info glass-card" style="padding: 30px;">
+                    <h1 id="detail-title" style="font-size: 2.5rem; margin-bottom: 10px;">Event Title</h1>
+                    
+                    <div style="display: flex; gap: 20px; color: #aaa; margin-bottom: 30px; font-size: 1.1rem;">
+                        <p><i class="fas fa-calendar neon-text"></i> <span id="detail-date">Date</span></p>
+                        <p><i class="fas fa-map-marker-alt neon-text"></i> <span id="detail-location">Location</span></p>
+                        <p><i class="fas fa-users neon-text"></i> <span id="detail-capacity">Capacity</span> spots</p>
+                    </div>
+
+                    <h3 style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">About This Event</h3>
+                    <p id="detail-description" style="line-height: 1.8; color: #ccc; white-space: pre-line;">Description goes here...</p>
+                </div>
+
+               <div class="checkout-card glass-panel" style="padding: 30px; text-align: center; position: sticky; top: 100px;">
+    <h3 style="color: #aaa; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px;">Ticket Price</h3>
+    <h2 id="detail-price" class="neon-text" style="font-size: 3rem; margin: 10px 0 20px 0;">$0.00</h2>
+    
+    <div style="margin-bottom: 20px; text-align: left;">
+        <label style="color: #aaa; font-size: 0.9rem; display: block; margin-bottom: 5px;">How many tickets?</label>
+        <select id="ticket-quantity" class="glass-input" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.1);">
+            <option value="1">1 Ticket</option>
+            <option value="2">2 Tickets</option>
+            <option value="3">3 Tickets</option>
+            <option value="4">4 Tickets</option>
+            <option value="5">5 Tickets</option>
+        </select>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; font-weight: bold; font-size: 1.2rem;">
+        <span>Total:</span>
+        <span id="total-price" class="neon-text">$0.00</span>
+    </div>
+    
+    <button id="book-ticket-btn" class="btn btn-neon btn-full" style="font-size: 1.2rem; padding: 15px;">
+        <span><i class="fas fa-ticket-alt"></i> Book Ticket Now</span>
+    </button>
+    <p id="booking-message" style="margin-top: 15px; font-size: 0.9rem;"></p>
+</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script> 
+    <script>
+    AOS.init({ once: true });
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('id');
+    let basePrice = 0; // Store the price for calculations
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        if (!eventId) {
+            alert("No event selected!");
+            window.location.href = 'events.html';
+            return;
+        }
+
+        try {
+            const response = await API.get(`/events/${eventId}`);
+            const event = response.data;
+
+            document.getElementById('detail-title').textContent = event.title;
+            document.getElementById('detail-category').textContent = event.category;
+            document.getElementById('detail-location').textContent = event.location;
+            document.getElementById('detail-capacity').textContent = event.capacity;
+            document.getElementById('detail-description').textContent = event.description;
+            
+            // Set prices
+            // Set prices in INR and approximate USD
+// Set prices and detect currency
+            basePrice = parseFloat(event.price);
+            const hostCurrency = event.currency ? event.currency.toUpperCase() : 'INR';
+            const exchangeRate = 83.5; // Example: 1 USD = 83.5 INR
+
+            const formatDualCurrency = (amount) => {
+                if (hostCurrency === 'USD') {
+                    // Host wants USD: Show $ Primary, ₹ Secondary
+                    const amountInr = (amount * exchangeRate).toFixed(2);
+                    return `$${amount.toFixed(2)} <span style="font-size: 1.2rem; color: #aaa; font-weight: normal;">(≈ ₹${amountInr} INR)</span>`;
+                } else {
+                    // Host wants INR: Show ₹ Primary, $ Secondary
+                    const amountUsd = (amount / exchangeRate).toFixed(2);
+                    return `₹${amount.toFixed(2)} <span style="font-size: 1.2rem; color: #aaa; font-weight: normal;">(≈ $${amountUsd} USD)</span>`;
+                }
+            };
+
+            document.getElementById('detail-price').innerHTML = formatDualCurrency(basePrice);
+            document.getElementById('total-price').innerHTML = formatDualCurrency(basePrice);
+            
+            const eventDate = new Date(event.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('detail-date').textContent = eventDate;
+            document.getElementById('detail-image').src = event.imageUrl || 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200';
+
+            document.getElementById('loading-spinner').classList.add('hidden');
+            document.getElementById('event-content').classList.remove('hidden');
+
+        } catch (err) {
+            document.getElementById('loading-spinner').innerHTML = `<h3 style="color: #ef4444;">Event not found or server error.</h3>`;
+        }
+    });
+
+    // 🚨 NEW: Auto-calculate Total Price when dropdown changes
+    // 🚨 UPDATE: Auto-calculate Total Price with dual currency
+document.getElementById('ticket-quantity').addEventListener('change', (e) => {
+    const quantity = parseInt(e.target.value);
+    document.getElementById('total-price').innerHTML = formatDualCurrency(basePrice * quantity);
+});
+
+    // 4. Handle Ticket Booking
+    document.getElementById('book-ticket-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('book-ticket-btn');
+        const msgBox = document.getElementById('booking-message');
+
+        if (!Utils.isAuthenticated()) {
+            msgBox.style.color = '#ef4444';
+            msgBox.textContent = "You must be logged in to book a ticket.";
+            setTimeout(() => window.location.href = 'login.html', 2000);
+            return;
+        }
+
+        btn.innerHTML = 'Processing...';
+        btn.disabled = true;
+
+       try {
+                const user = Utils.getUser();
+                const selectedQuantity = parseInt(document.getElementById('ticket-quantity').value);
+
+                const requestData = {
+                    eventId: eventId,
+                    userId: user._id || user.id,
+                    quantity: selectedQuantity
+                };
+
+                // 🚨 CHANGE 1: Call your new payment route instead of bookings
+                const response = await API.post('/payments/create-checkout-session', requestData);
+                
+                btn.innerHTML = '<span><i class="fas fa-spinner fa-spin"></i> Redirecting to Secure Checkout...</span>';
+                
+                // 🚨 CHANGE 2: Redirect the user to the Stripe Checkout URL
+                if (response.url) {
+                    window.location.href = response.url;
+                } else {
+                    throw new Error("Failed to generate checkout link.");
+                }
+
+            } catch (err) {
+                btn.innerHTML = '<span><i class="fas fa-ticket-alt"></i> Try Again</span>';
+                btn.disabled = false;
+                
+                msgBox.style.color = '#ef4444';
+                msgBox.textContent = err.response?.data?.error || "Checkout failed. Please try again.";
+            }
+    });
+</script>
+</body>
+</html>

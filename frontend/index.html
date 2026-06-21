@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Events | Premium Event Management</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/events.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- Landing Page Specific Styles -->
+    <style>
+        /* This makes the page smoothly glide to sections when clicked! */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Social Proof Banner */
+        .social-proof {
+            opacity: 0.6;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 2.5rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin: 2rem auto 4rem auto;
+            color: #fff;
+        }
+        .social-proof h3 { font-size: 1.5rem; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+
+        /* How It Works Cards */
+        .step-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 242, 254, 0.15);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+        .step-icon {
+            font-size: 3rem;
+            color: #00f2fe;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            padding: 2rem;
+            border-left: 4px solid #00f2fe;
+            position: relative;
+        }
+        .testimonial-card i.fa-quote-left {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(0, 242, 254, 0.1);
+        }
+
+        /* Footer / Contact */
+        .footer-section {
+            background: linear-gradient(to top, #0a0a0f, #121218);
+            padding: 5rem 0 2rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(0, 242, 254, 0.2);
+        }
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: #00f2fe; }
+    </style>
+</head>
+<body class="dark-theme">
+    
+    <!-- NAVBAR -->
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <span class="neon-text">Nexus</span>Events
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <!-- Updated links to target IDs on this page -->
+                <li><a href="#about-section">About</a></li>
+                <li><a href="#contact-section">Contact</a></li>
+                <li class="nav-dashboard auth-hidden"><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn btn-outline">Log In</a>
+                <a href="register.html" class="btn btn-neon">Sign Up</a>
+            </div>
+            <div class="hamburger" id="hamburger-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO (SPLIT LAYOUT) -->
+    <header class="hero container" id="hero" style="margin-top: 120px; display: flex; align-items: center; justify-content: space-between; gap: 40px; min-height: 60vh; flex-wrap: wrap;">
+        <div class="hero-content" data-aos="fade-right" data-aos-duration="1000" style="flex: 1; min-width: 300px; max-width: 600px;">
+            <h1 class="hero-title" style="font-size: 3.8rem; margin-bottom: 20px; line-height: 1.1;">Experience <span class="neon-text">Extraordinary</span> Moments</h1>
+            <p class="hero-subtitle" style="color: #aaa; font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6;">Discover, book, and host premium events worldwide. Built for creators, designed for you.</p>
+            <div class="hero-actions" style="display: flex; gap: 15px;">
+                <a href="events.html" class="btn btn-neon" style="padding: 15px 35px; font-size: 1.1rem;">Explore Events</a>
+                <a href="#about-section" class="btn btn-outline" style="padding: 15px 35px; font-size: 1.1rem;">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-graphics" data-aos="fade-left" data-aos-duration="1200" style="flex: 1; min-width: 300px; text-align: right;">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" alt="Concert" style="width: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,242,254,0.2);">
+        </div>
+    </header>
+
+    <!-- SECTION 2: SOCIAL PROOF -->
+    <div class="container social-proof" data-aos="fade-up" data-aos-delay="200">
+        <h3><i class="fab fa-spotify"></i> Spotify</h3>
+        <h3><i class="fab fa-google"></i> Google</h3>
+        <h3><i class="fab fa-microsoft"></i> Microsoft</h3>
+        <h3><i class="fab fa-amazon"></i> Amazon</h3>
+    </div>
+
+    <!-- SECTION 3: HOW IT WORKS -->
+    <section class="container" style="padding: 4rem 0;">
+        <div class="text-center" data-aos="fade-up" style="margin-bottom: 4rem;">
+            <h2>How It <span class="neon-text">Works</span></h2>
+            <p style="color: #aaa;">Your journey to unforgettable experiences in three simple steps.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+            <div class="step-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-compass step-icon"></i>
+                <h3>1. Discover</h3>
+                <p style="color: #aaa; margin-top: 10px;">Browse through thousands of premium events tailored exactly to your unique interests and location.</p>
+            </div>
+            <div class="step-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-ticket-alt step-icon"></i>
+                <h3>2. Book Securely</h3>
+                <p style="color: #aaa; margin-top: 10px;">Reserve your spot instantly with our secure booking engine. Manage all your tickets from your dashboard.</p>
+            </div>
+            <div class="step-card glass-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-glass-cheers step-icon"></i>
+                <h3>3. Experience</h3>
+                <p style="color: #aaa; margin-top: 10px;">Show up, scan your digital ticket, and enjoy extraordinary moments with a community of passionate people.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: TRENDING EVENTS (Gorgeous 6-Card Static Grid) -->
+    <section class="events-main container" style="padding: 4rem 0;">
+        <div class="text-center" data-aos="fade-up" style="margin-bottom: 3rem;">
+            <h2>Trending <span class="neon-text">Experiences</span></h2>
+            <p style="color: #aaa;">Scroll to explore what's happening around the globe.</p>
+        </div>
+
+        <div class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            
+            <!-- CARD 1: AI Summit -->
+            <article class="event-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-image" style="height: 200px; overflow: hidden; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800" alt="Tech Event" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="category-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Technology</div>
+                </div>
+                <div class="card-content" style="padding: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Global AI Summit 2026</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar" style="color: var(--neon-blue); width: 20px;"></i> October 15, 2026</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: var(--neon-blue); width: 20px;"></i> Moscone Center, SF</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <span class="neon-text" style="font-size: 1.2rem; font-weight: bold;">$299.00</span>
+                        <a href="event-details.html?id=dummy-tech" class="btn btn-outline">Details</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 2: Neon Nights -->
+            <article class="event-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-image" style="height: 200px; overflow: hidden; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&q=80&w=800" alt="Music Event" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="category-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Music</div>
+                </div>
+                <div class="card-content" style="padding: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Neon Nights Festival</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar" style="color: var(--neon-purple); width: 20px;"></i> November 02, 2026</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: var(--neon-purple); width: 20px;"></i> Tokyo, Japan</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <span class="neon-text" style="font-size: 1.2rem; font-weight: bold;">$150.00</span>
+                        <a href="event-details.html?id=dummy-music" class="btn btn-outline">Details</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 3: Founders Connect -->
+            <article class="event-card glass-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-image" style="height: 200px; overflow: hidden; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=800" alt="Business Event" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="category-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Business</div>
+                </div>
+                <div class="card-content" style="padding: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Founders Connect</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar" style="color: #10b981; width: 20px;"></i> December 10, 2026</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: #10b981; width: 20px;"></i> London, UK</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <span style="font-size: 1.2rem; font-weight: bold; color: #10b981;">Free</span>
+                        <a href="event-details.html?id=dummy-business" class="btn btn-outline">Details</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 4: Culinary Masters -->
+            <article class="event-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-image" style="height: 200px; overflow: hidden; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800" alt="Food Event" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="category-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Culinary</div>
+                </div>
+                <div class="card-content" style="padding: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Culinary Masters Expo</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar" style="color: #f59e0b; width: 20px;"></i> January 14, 2027</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: #f59e0b; width: 20px;"></i> Paris, France</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <span style="font-size: 1.2rem; font-weight: bold; color: #f59e0b;">$85.00</span>
+                        <a href="event-details.html?id=dummy-food" class="btn btn-outline">Details</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 5: E-Sports Championship -->
+            <article class="event-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-image" style="height: 200px; overflow: hidden; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" alt="Gaming Event" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="category-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Gaming</div>
+                </div>
+                <div class="card-content" style="padding: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Nexus E-Sports Finals</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar" style="color: #ef4444; width: 20px;"></i> February 28, 2027</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: #ef4444; width: 20px;"></i> Seoul, South Korea</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <span style="font-size: 1.2rem; font-weight: bold; color: #ef4444;">$60.00</span>
+                        <a href="event-details.html?id=dummy-gaming" class="btn btn-outline">Details</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 6: Immersive Art -->
+            <article class="event-card glass-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-image" style="height: 200px; overflow: hidden; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?auto=format&fit=crop&q=80&w=800" alt="Art Event" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="category-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">Art & Design</div>
+                </div>
+                <div class="card-content" style="padding: 20px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Lumina Art Experience</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar" style="color: #ec4899; width: 20px;"></i> March 12, 2027</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: #ec4899; width: 20px;"></i> New York City, NY</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <span style="font-size: 1.2rem; font-weight: bold; color: #ec4899;">$45.00</span>
+                        <a href="event-details.html?id=dummy-art" class="btn btn-outline">Details</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+        
+        <div class="text-center" style="margin-top: 3rem;" data-aos="fade-up">
+            <a href="events.html" class="btn btn-outline" style="padding: 10px 30px;">Explore All Live Events <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ABOUT US -->
+    <section id="about-section" class="container" style="padding: 6rem 0; display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px;" data-aos="fade-right">
+            <div style="position: relative;">
+                <div style="position: absolute; top: -20px; left: -20px; width: 100%; height: 100%; border: 2px solid #00f2fe; border-radius: 20px; z-index: -1;"></div>
+                <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800" alt="About Us" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            </div>
+        </div>
+        <div style="flex: 1; min-width: 300px;" data-aos="fade-left">
+            <h2>Empowering <span class="neon-text">Connections</span></h2>
+            <p style="color: #aaa; font-size: 1.1rem; line-height: 1.7; margin: 1.5rem 0;">
+                We believe that the best moments in life are shared. NexusEvents was built to bridge the gap between passionate event creators and enthusiastic attendees. 
+                <br><br>
+                Whether you are organizing a massive tech conference, an intimate music gig, or a corporate networking session, our platform provides all the tools you need to succeed, scale, and inspire.
+            </p>
+            <div style="display: flex; gap: 30px; margin-top: 2rem;">
+                <div>
+                    <h3 class="neon-text" style="font-size: 2rem;">15k+</h3>
+                    <p style="color: #aaa;">Active Users</p>
+                </div>
+                <div>
+                    <h3 class="neon-text" style="font-size: 2rem;">2.4k</h3>
+                    <p style="color: #aaa;">Events Hosted</p>
+                </div>
+                <div>
+                    <h3 class="neon-text" style="font-size: 2rem;">50+</h3>
+                    <p style="color: #aaa;">Countries</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: TESTIMONIALS -->
+    <section class="container" style="padding: 4rem 0 6rem 0;">
+        <div class="text-center" data-aos="fade-up" style="margin-bottom: 3rem;">
+            <h2>What Our <span class="neon-text">Users Say</span></h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div class="testimonial-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-quote-left"></i>
+                <p style="color: #ddd; font-style: italic; line-height: 1.6; margin-bottom: 1.5rem;">"NexusEvents completely transformed how we handle our yearly developer conferences. The dashboard analytics alone saved us hours of manual tracking."</p>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #00f2fe; color: #000; display: flex; align-items: center; justify-content: center; font-weight: bold;">S</div>
+                    <div>
+                        <h4 style="margin: 0;">Sarah Jenkins</h4>
+                        <span style="color: #888; font-size: 0.9rem;">Lead Organizer, DevTech</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-quote-left"></i>
+                <p style="color: #ddd; font-style: italic; line-height: 1.6; margin-bottom: 1.5rem;">"As an attendee, this is the smoothest booking process I've ever experienced. No hidden fees, instant QR tickets, and a beautiful UI."</p>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #ffaa00; color: #000; display: flex; align-items: center; justify-content: center; font-weight: bold;">M</div>
+                    <div>
+                        <h4 style="margin: 0;">Marcus Chen</h4>
+                        <span style="color: #888; font-size: 0.9rem;">Music Producer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FOOTER & CONTACT -->
+    <footer id="contact-section" class="footer-section">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 3rem;">
+            
+            <div data-aos="fade-up" data-aos-delay="100">
+                <a href="#hero" class="logo" style="text-decoration: none;">
+                    <span class="neon-text" style="font-size: 1.8rem; font-weight: 800;">Nexus</span><span style="color: #fff; font-size: 1.8rem; font-weight: 800;">Events</span>
+                </a>
+                <p style="color: #aaa; margin-top: 1rem; line-height: 1.6;">Your ultimate destination for discovering and hosting the world's most incredible experiences.</p>
+                <div style="display: flex; gap: 15px; margin-top: 1.5rem;">
+                    <a href="#" style="color: #fff; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: #fff; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #fff; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links" data-aos="fade-up" data-aos-delay="200">
+                <h3 style="margin-bottom: 1.5rem;">Quick Links</h3>
+                <ul style="list-style: none; padding: 0; line-height: 2.2;">
+                    <li><a href="#about-section">About Us</a></li>
+                    <li><a href="events.html">Browse Events</a></li>
+                    <li><a href="login.html">Host an Event</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300">
+                <h3 style="margin-bottom: 1.5rem;">Contact & Subscribe</h3>
+                <p style="color: #aaa; margin-bottom: 1rem;"><i class="fas fa-envelope" style="margin-right: 10px; color: #00f2fe;"></i> support@nexusevents.com</p>
+                <p style="color: #aaa; margin-bottom: 1.5rem;"><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: #00f2fe;"></i> Tech City, TC 90210</p>
+                <form style="display: flex; gap: 10px;">
+                    <input type="email" placeholder="Enter your email..." class="glass-input" style="flex: 1; padding: 10px 15px;" required>
+                    <button type="submit" class="btn btn-neon" style="padding: 10px 20px;">Join</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="text-center" style="color: #555; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05);">
+            <p>&copy; 2026 NexusEvents. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800
+        });
+    </script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+</body>
+</html>

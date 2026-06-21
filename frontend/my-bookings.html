@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | Nexus Events</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body class="dark-theme">
+
+    <div class="dashboard-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h2><span class="neon-text">N</span>Events</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Browse Events</a></li>
+                <li class="active"><a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a></li>
+                <li class="logout"><a href="#" onclick="Utils.logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-content">
+            <header class="dashboard-header glass-nav">
+                <div class="header-title">
+                    <h2>My <span class="neon-text">Digital Tickets</span></h2>
+                    <p style="color: #aaa; font-size: 0.9rem;">Your upcoming events and past memories.</p>
+                </div>
+            </header>
+
+            <div class="container" style="padding-top: 2rem;">
+                <div id="loading-state" style="text-align: center; padding: 40px;">
+                    <h3 class="neon-text">Fetching your tickets...</h3>
+                </div>
+
+                <!-- Tickets Container -->
+                <div id="tickets-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;" class="hidden">
+                    <!-- Tickets will be injected here via JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/my-bookings.js"></script>
+    
+    <script>
+        AOS.init({ once: true });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('tickets-container');
+            const loader = document.getElementById('loading-state');
+            
+            // 1. Get the logged-in user
+            const user = Utils.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                // 2. Fetch their bookings from the backend
+                // Note: Ensure your backend route is set up as GET /api/v1/bookings/user/:userId
+                const userId = user._id || user.id;
+                const response = await API.get(`/bookings/user/${userId}`);
+                
+                const bookings = response.data;
+                loader.classList.add('hidden');
+                container.classList.remove('hidden');
+
+                // 3. Render the tickets!
+                if (!bookings || bookings.length === 0) {
+                    container.innerHTML = `
+                        <div class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+                            <i class="fas fa-ticket-alt" style="font-size: 3rem; color: #555; margin-bottom: 20px;"></i>
+                            <h3>No tickets found.</h3>
+                            <p style="color: #aaa; margin-top: 10px;">Looks like your social calendar is empty.</p>
+                            <a href="events.html" class="btn btn-neon" style="margin-top: 20px; display: inline-block;">Find Events</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+              container.innerHTML = bookings.map(booking => {
+                    // Safety check in case the event was deleted from the database
+                    if (!booking.event) return ''; 
+
+                    // 1. Format the Date for display
+                    const eventDateObj = new Date(booking.event.date);
+                    const eventDate = eventDateObj.toLocaleDateString('en-US', { 
+                        weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' 
+                    });
+
+                    // 2. Logic for the Badge: Is the event in the past?
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0); // Reset time to midnight for a fair day-to-day comparison
+                    
+                    let statusBadge = '';
+                    if (eventDateObj >= today) {
+                        // Future / Upcoming Event
+                        statusBadge = `<span style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; border: 1px solid #10b981; display: inline-flex; align-items: center; gap: 5px;"><i class="fas fa-check-circle"></i> Confirmed</span>`;
+                    } else {
+                        // Past Event
+                        statusBadge = `<span style="background: rgba(170, 170, 170, 0.1); color: #aaa; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(170, 170, 170, 0.5); display: inline-flex; align-items: center; gap: 5px;"><i class="fas fa-history"></i> Past Event</span>`;
+                    }
+
+                    return `
+                        <div class="ticket-card glass-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; position: relative;" data-aos="fade-up">
+                            <!-- Top Event Info -->
+                            <div style="background: rgba(0, 242, 254, 0.1); padding: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2);">
+                                
+                                <!-- Header row: Title and Badge -->
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                                    <h3 style="margin: 0; font-size: 1.3rem; line-height: 1.2; padding-right: 10px;">${booking.event.title}</h3>
+                                    ${statusBadge}
+                                </div>
+
+                                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 5px;"><i class="fas fa-calendar neon-text"></i> ${eventDate}</p>
+                                <p style="color: #ccc; font-size: 0.9rem;"><i class="fas fa-map-marker-alt neon-text"></i> ${booking.event.location}</p>
+                            </div>
+                            
+                            <!-- Bottom Ticket Details -->
+                            <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-size: 0.8rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px;">Admit</p>
+                                    <h2 class="neon-text" style="font-size: 2rem;">${booking.quantity}</h2>
+                                </div>
+                                <div style="text-align: right;">
+                                    <p style="font-size: 0.8rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px;">Total Paid</p>
+                                    <h3 style="font-size: 1.2rem;">${Utils.formatCurrency(booking.totalAmount)}</h3>
+                                </div>
+                            </div>
+                            
+                            <!-- Fake Barcode -->
+                            <div style="background: rgba(0,0,0,0.5); padding: 15px; text-align: center; font-family: 'Courier New', Courier, monospace; letter-spacing: 5px; font-size: 1.5rem; color: rgba(255,255,255,0.5);">
+                                ||||| |||| || | || ||||
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error(error);
+                loader.classList.add('hidden');
+                container.classList.remove('hidden');
+                container.innerHTML = `
+                    <div class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #f59e0b; margin-bottom: 20px;"></i>
+                        <h3>Unable to load your bookings.</h3>
+                        <p style="color: #aaa; margin-top: 10px;">Please try again later.</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

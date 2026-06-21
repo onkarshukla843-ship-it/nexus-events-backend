@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event | Nexus Events</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body class="dark-theme">
+
+    <div class="dashboard-layout">
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header"><h2><span class="neon-text">N</span>Events</h2></div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Browse</a></li>
+                <li class="active"><a href="#"><i class="fas fa-edit"></i> Edit Event</a></li>
+                <li class="logout"><a href="#" onclick="Utils.logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-content">
+            <header class="dashboard-header glass-nav">
+                <div class="header-title">
+                    <h2>Edit <span class="neon-text">Event</span></h2>
+                    <p style="color: #aaa; font-size: 0.9rem;">Update your event details below.</p>
+                </div>
+            </header>
+
+            <div class="container" style="padding-top: 2rem;">
+                <div class="form-container glass-card" data-aos="fade-up">
+                    <form id="edit-event-form">
+                        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label>Event Title</label>
+                                <input type="text" id="title" class="glass-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="category" class="glass-input" required>
+                                    <option value="Tech">Tech</option>
+                                    <option value="Music">Music</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Culinary">Culinary</option>
+                                    <option value="Gaming">Gaming</option>
+                                    <option value="Art & Design">Art & Design</option>
+                                </select>
+                            </div>
+
+                           <div class="form-group" style="flex: 1;">
+                        <label>Event Date & Time</label>
+                        <input type="datetime-local" id="editEventDate" required>
+                    </div>
+
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label>Venue / Location</label>
+                                <input type="text" id="location" class="glass-input" required>
+                            </div>
+
+                            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Currency</label>
+                        <select id="editEventCurrency">
+                            <option value="INR">₹ INR</option>
+                            <option value="USD">$ USD</option>
+                            <option value="EUR">€ EUR</option>
+                            <option value="GBP">£ GBP</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label>Ticket Price</label>
+                        <input type="number" id="editEventPrice" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label>Capacity</label>
+                        <input type="number" id="editEventCapacity" min="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Cover Image URL</label>
+                    <input type="url" id="editEventImage" placeholder="https://images.unsplash.com/... (Optional)">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label>Description</label>
+                    <textarea id="editEventDescription" rows="4" placeholder="Tell everyone what this event is about..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-neon btn-full" id="editEventBtn">
+                    Save Changes
+                </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/api.js"></script>
+    <script>
+        AOS.init({ once: true });
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const token = Utils.getToken();
+                if (!token) return;
+
+                // 🚨 BULLETPROOF FIX: Native fetch with the token
+                const response = await fetch(`http://localhost:5001/api/v1/events/${eventId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error("Backend rejected the request.");
+
+                const responseData = await response.json();
+                const event = responseData.data || responseData;
+                
+                // 🚨 FIX 2: Mapping to your new HTML IDs!
+                document.getElementById('title').value = event.title || '';
+                document.getElementById('category').value = event.category || 'Tech';
+                document.getElementById('location').value = event.location || '';
+                
+                // Set the new fields
+                document.getElementById('editEventCurrency').value = event.currency || 'USD';
+                document.getElementById('editEventPrice').value = event.price || 0;
+                document.getElementById('editEventCapacity').value = event.capacity || 1;
+                document.getElementById('editEventImage').value = event.imageUrl || '';
+                document.getElementById('editEventDescription').value = event.description || '';
+                
+                // 🚨 FIX 3: Properly formatting the date for the new datetime-local calendar!
+                if (event.date) {
+                    // Extracts exactly 'YYYY-MM-DDThh:mm' which the calendar requires
+                    const formattedDate = new Date(event.date).toISOString().slice(0, 16);
+                    document.getElementById('editEventDate').value = formattedDate;
+                }
+            } catch (err) {
+                console.error("Failed to load event:", err);
+                alert("Could not load event data. Please check console.");
+            }
+        });
+
+        document.getElementById('edit-event-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Map to the new Button ID
+            const btn = document.getElementById('editEventBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Saving...';
+            btn.disabled = true;
+            
+            try {
+                const token = Utils.getToken();
+                
+                // Gather all the new input values
+                const updatedData = {
+                    title: document.getElementById('title').value,
+                    category: document.getElementById('category').value,
+                    date: document.getElementById('editEventDate').value,
+                    location: document.getElementById('location').value,
+                    currency: document.getElementById('editEventCurrency').value, // Save Currency!
+                    price: parseFloat(document.getElementById('editEventPrice').value),
+                    capacity: parseInt(document.getElementById('editEventCapacity').value),
+                    imageUrl: document.getElementById('editEventImage').value,
+                    description: document.getElementById('editEventDescription').value
+                };
+
+                // 🚨 BULLETPROOF FIX: Native fetch for saving data
+                const response = await fetch(`http://localhost:5001/api/v1/events/${eventId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.error || data.message || "Failed to update event");
+
+                alert("Event updated successfully!");
+                window.location.href = 'dashboard.html';
+                
+            } catch (err) {
+                alert("Update failed: " + err.message);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

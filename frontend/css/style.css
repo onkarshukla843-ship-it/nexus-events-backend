@@ -1,0 +1,498 @@
+/* ==========================================================================
+   CSS Variables & Design System
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --bg-dark: #0a0a0f;
+    --bg-darker: #050507;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b5;
+    
+    /* Neon Gradients & Accents */
+    --neon-blue: #00f0ff;
+    --neon-purple: #8a2be2;
+    --neon-pink: #ff007f;
+    --gradient-primary: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+    --gradient-hover: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+    
+    /* Glassmorphism Variables */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    --glass-blur: blur(12px);
+
+    /* Typography */
+    --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Typography & Accents
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.neon-text {
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ==========================================================================
+   Glassmorphism Utilities
+   ========================================================================== */
+.glass-nav, .glass-card, .glass-panel, .glass-footer {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    transition: transform var(--transition-smooth), background var(--transition-smooth);
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    background: var(--glass-hover);
+}
+
+.glass-pill {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    gap: 0.5rem;
+}
+
+.btn-neon {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+}
+
+.btn-neon:hover {
+    background: var(--gradient-hover);
+    box-shadow: 0 6px 20px rgba(255, 0, 127, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+}
+
+.btn-outline:hover {
+    background: var(--glass-hover);
+    border-color: var(--neon-blue);
+}
+
+.btn-glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    color: white;
+}
+
+.btn-glass:hover {
+    background: var(--glass-hover);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* ==========================================================================
+   Forms & Inputs
+   ========================================================================== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+}
+
+.input-wrapper input,
+.glass-input,
+.glass-select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 0.8rem 1rem 0.8rem 2.5rem; /* Left padding accommodates icons */
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.glass-input, .glass-select {
+    padding: 0.8rem 1rem; /* Reset padding for inputs without icons */
+}
+
+.input-wrapper input:focus,
+.glass-input:focus,
+.glass-select:focus {
+    outline: none;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+/* ==========================================================================
+   Navigation (Navbar)
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text-primary);
+}
+
+.nav-auth {
+    display: flex;
+    gap: 1rem;
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Loaders
+   ========================================================================== */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.neon-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--glass-border);
+    border-top-color: var(--neon-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.glass-footer {
+    margin-top: auto;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 3rem 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand p {
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    margin-left: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.footer-links a:hover {
+    color: var(--text-primary);
+}
+
+
+/* =========================================
+   PREMIUM FLOATING PILL SEARCH BAR
+   ========================================= */
+
+.premium-search-pill {
+    display: flex;
+    align-items: center;
+    background: rgba(20, 20, 30, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 60px; /* Makes it a pill shape */
+    padding: 8px 12px;
+    max-width: 950px;
+    margin: 0 auto;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 242, 254, 0.1);
+    transition: all 0.4s ease;
+}
+
+.premium-search-pill:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 242, 254, 0.2);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.search-segment {
+    display: flex;
+    align-items: center;
+    flex: 1; /* This forces all sections to be EQUAL LENGTH! */
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.segment-icon {
+    color: #00f2fe;
+    font-size: 1.2rem;
+    margin-right: 12px;
+}
+
+/* Vertical lines to separate the inputs cleanly */
+.input-divider {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Strip away default input styles */
+.naked-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    font-family: inherit;
+}
+
+.naked-input::placeholder {
+    color: #888;
+}
+
+/* Fix weird dropdown styles */
+select.naked-input option {
+    background: #121218;
+    color: #fff;
+}
+
+.dropdown-arrow {
+    cursor: pointer;
+    appearance: none; /* Hides default ugly browser arrow */
+}
+
+/* The New Glowing Button */
+.btn-search-glow {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+    white-space: nowrap;
+}
+
+.btn-search-glow:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.6);
+}
+
+/* Make it stack nicely on mobile phones */
+@media (max-width: 768px) {
+    .premium-search-pill {
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 20px;
+        gap: 15px;
+    }
+    .search-segment {
+        width: 100%;
+        padding: 10px 5px;
+    }
+    .input-divider {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 15px;
+    }
+    .btn-search-glow {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* =========================================
+   AUTHENTICATION & USER PROFILE UI
+   ========================================= */
+
+/* Hides elements from users who are not logged in */
+.auth-hidden {
+    display: none !important;
+}
+
+/* The Glowing User Profile Pill */
+.user-profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 242, 254, 0.1);
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
+}
+
+.pill-icon {
+    font-size: 22px;
+    color: #00f2fe;
+}
+
+.pill-text {
+    color: #e0e0e0;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.pill-name {
+    color: #00f2fe;
+    text-transform: capitalize;
+}

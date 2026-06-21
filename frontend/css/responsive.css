@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Responsive Design Breakpoints
+   ========================================================================== */
+
+/* Large Tablets & Small Desktops */
+@media screen and (max-width: 1024px) {
+    .dashboard-layout {
+        grid-template-columns: 80px 1fr; /* Collapse sidebar */
+    }
+
+    .sidebar-header h2 {
+        display: none; /* Hide text, keep icon if added */
+    }
+
+    .sidebar-menu li a span {
+        display: none; /* Hide text, keep icons */
+    }
+    
+    .sidebar-menu li a {
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .details-layout {
+        grid-template-columns: 1fr; /* Stack event details */
+        gap: 2rem;
+    }
+
+    .sticky-widget {
+        position: static; /* Remove sticky behavior */
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+    /* Navbar Mobile Menu */
+    .nav-links, .nav-auth {
+        display: none; /* Hide by default, toggled via JS */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .nav-links.active, .nav-auth.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .nav-container {
+        flex-wrap: wrap;
+    }
+
+    /* Hero Sections */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 8rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-graphics {
+        display: none; /* Hide floating cards on mobile to save space */
+    }
+
+    /* Search Bar */
+    .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        flex-direction: column;
+    }
+
+    /* Dashboard */
+    .dashboard-layout {
+        grid-template-columns: 1fr; /* Full width */
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -100%; /* Hide off-screen */
+        z-index: 2000;
+        background: var(--bg-dark);
+        width: 260px;
+        transition: left var(--transition-smooth);
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr; /* Stack form inputs */
+    }
+}
+
+/* Mobile Phones */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .footer-links {
+        margin-top: 1rem;
+    }
+
+    .footer-links a {
+        margin: 0 0.5rem;
+    }
+}

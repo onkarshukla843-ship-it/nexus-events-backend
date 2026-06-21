@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Nexus Events</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="dark-theme admin-mode">
+
+    <div class="dashboard-layout">
+        <aside class="sidebar glass-panel admin-sidebar">
+            <div class="sidebar-header">
+                <h2><span class="neon-text">Admin</span>Nexus</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="#overview"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="#manage-events"><i class="fas fa-calendar-check"></i> Manage Events</a></li>
+                <li><a href="#manage-users"><i class="fas fa-users"></i> Manage Users</a></li>
+                <li><a href="#manage-bookings"><i class="fas fa-file-invoice-dollar"></i> All Bookings</a></li>
+                <li class="logout"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-content">
+            <header class="dashboard-header glass-nav">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search system ID...">
+                </div>
+                <div class="header-profile">
+                    <span class="admin-badge glass-pill">Super Admin</span>
+                </div>
+            </header>
+
+            <div class="kpi-grid">
+                <div class="kpi-card glass-card">
+                    <div class="kpi-info">
+                        <p>Total Revenue</p>
+                        <h2 id="total-revenue" class="neon-text">$0.00</h2>
+                    </div>
+                    <i class="fas fa-wallet kpi-icon"></i>
+                </div>
+                <div class="kpi-card glass-card">
+                    <div class="kpi-info">
+                        <p>Total Users</p>
+                        <h2 id="total-users">0</h2>
+                    </div>
+                    <i class="fas fa-users kpi-icon"></i>
+                </div>
+                <div class="kpi-card glass-card">
+                    <div class="kpi-info">
+                        <p>Active Events</p>
+                        <h2 id="total-events">0</h2>
+                    </div>
+                    <i class="fas fa-calendar-alt kpi-icon"></i>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container glass-card">
+                    <h3>Revenue Over Time</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <div class="chart-container glass-card">
+                    <h3>Ticket Sales by Category</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-section glass-card">
+                <div class="data-header">
+                    <h3>Recent Platform Activity</h3>
+                    <button class="btn btn-outline btn-small">Export CSV</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="glass-table" id="admin-activity-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>User</th>
+                                <th>Event</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                            <tr><td colspan="6" class="text-center">Loading system data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/admin.js"></script>
+</body>
+</html>

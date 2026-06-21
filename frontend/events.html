@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Events | Nexus Events</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/events.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body class="dark-theme">
+    
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="neon-text">Nexus</span>Events
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn btn-outline">Log In</a>
+            </div>
+            <div class="hamburger" id="hamburger-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="hero-search-section container" style="margin-top: 120px; margin-bottom: 60px; text-align: center;">
+        
+        <div class="hero-titles" style="margin-bottom: 30px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Discover <span class="neon-text" style="background: linear-gradient(to right, #00f2fe, #4facfe); background-clip: text; -webkit-background-clip: text; color: transparent;">Experiences</span></h1>
+            <p style="color: #aaa; font-size: 1.1rem;">Find and book the best events, tailored exactly to your interests.</p>
+        </div>
+
+        <div class="premium-search-pill glass-panel" data-aos="zoom-in" data-aos-delay="200">
+            
+            <div class="search-segment input-divider">
+                <i class="fas fa-search segment-icon"></i>
+                <input type="text" id="search-input" placeholder="Search events, locations..." class="naked-input">
+            </div>
+            
+            <div class="search-segment input-divider">
+                <i class="fas fa-layer-group segment-icon"></i>
+                <select id="category-filter" class="naked-input dropdown-arrow">
+                    <option value="all">All Categories</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Music">Music</option>
+                    <option value="Business">Business</option>
+                    <option value="Sports">Sports</option>
+                </select>
+            </div>
+
+            <div class="search-segment">
+                <i class="fas fa-calendar-alt segment-icon"></i>
+                <input type="date" id="date-filter" class="naked-input">
+            </div>
+
+            <button class="btn-search-glow" onclick="applyFilters()">
+                <i class="fas fa-bolt" style="margin-right: 5px;"></i> Find Events
+            </button>
+
+        </div>
+    </section>
+
+    <main class="events-main container">
+        
+        <div class="events-grid" id="events-container"></div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50 });
+    </script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/events.js"></script> </body>
+</body>
+</html>
