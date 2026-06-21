@@ -27,7 +27,7 @@ const loadEvents = async () => {
     eventsContainer.innerHTML = '<div class="loader" style="text-align: center;">Loading events...</div>';
 
     try {
-        const response = await fetch('http://localhost:5001/api/v1/events', {
+        const response = await fetch('https://nexus-events-backend.onrender.com/api/v1/events', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

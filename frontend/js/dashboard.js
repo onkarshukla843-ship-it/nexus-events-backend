@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const userId = currentUser._id || currentUser.id;
         
         // 🚨 BULLETPROOF FIX: We bypass API.get and use raw fetch to guarantee the token is sent!
-        const response = await fetch(`http://localhost:5001/api/v1/bookings/user/${userId}`, {
+        const response = await fetch(`https://nexus-events-backend.onrender.com/api/v1/bookings/user/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             try {
                 // 🚨 Hit your protected backend route
-                const response = await fetch('http://localhost:5001/api/v1/payments/onboard-host', {
+                const response = await fetch('https://nexus-events-backend.onrender.com/api/v1/payments/onboard-host', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,

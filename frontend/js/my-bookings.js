@@ -19,7 +19,7 @@ const checkPaymentSuccess = async () => {
             
             console.log("Attempting to save booking to database...");
 
-            const response = await fetch('http://localhost:5001/api/v1/bookings', {
+            const response = await fetch('https://nexus-events-backend.onrender.com/api/v1/bookings', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -67,7 +67,7 @@ const loadMyBookings = async () => {
     const userId = currentUser._id || currentUser.id;
 
     try {
-        const response = await fetch(`http://localhost:5001/api/v1/bookings/user/${userId}`, {
+        const response = await fetch(`https://nexus-events-backend.onrender.com/api/v1/bookings/user/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,

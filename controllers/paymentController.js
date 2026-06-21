@@ -35,8 +35,8 @@ const createCheckoutSession = async (req, res) => {
             metadata: { eventId, userId, quantity },
             
             // 🚨 FIX 1: Updated to port 5001 AND explicitly attached the event details!
-            success_url: `http://localhost:5001/my-bookings.html?success=true&event_id=${eventId}&quantity=${quantity}`,
-            cancel_url: `http://localhost:5001/event-details.html?id=${eventId}`,
+            success_url: `https://nexus-events-backend.onrender.com/my-bookings.html?success=true&event_id=${eventId}&quantity=${quantity}`,
+            cancel_url: `https://nexus-events-backend.onrender.com/event-details.html?id=${eventId}`,
         };
 
         // THE AUTOMATED SPLIT LOGIC
@@ -88,8 +88,8 @@ const onboardHost = async (req, res) => {
         // 🚨 FIX 2: Updated the Dashboard return links to port 5001
         const accountLink = await stripe.accountLinks.create({
             account: stripeAccountId,
-            refresh_url: 'http://localhost:5001/dashboard.html?stripe=failed',
-            return_url: 'http://localhost:5001/dashboard.html?stripe=success',
+            refresh_url: 'https://nexus-events-backend.onrender.com/dashboard.html?stripe=failed',
+            return_url: 'https://nexus-events-backend.onrender.com/dashboard.html?stripe=success',
             type: 'account_onboarding',
         });
 

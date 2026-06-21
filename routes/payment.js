@@ -164,8 +164,8 @@ router.post('/create-checkout-session', async (req, res) => {
             ],
             mode: 'payment',
             // Where to send the user after they pay
-            success_url: `http://127.0.0.1:5500/frontend/my-bookings.html?success=true&event_id=${eventId}&quantity=1`,
-            cancel_url: `http://127.0.0.1:5500/frontend/event-details.html?canceled=true`,
+            success_url: `https://candid-biscuit-01a852.netlify.app/my-bookings.html?success=true&event_id=${event_id}&quantity=${quantity}`,
+            cancel_url: `https://candid-biscuit-01a852.netlify.app/event-details.html?id=${event_id}`,
             
             // 🚨 THE MAGIC SAUCE: Splitting the payment! 🚨
             payment_intent_data: {
